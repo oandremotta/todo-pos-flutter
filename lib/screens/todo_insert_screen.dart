@@ -6,12 +6,14 @@ class TodoInsertScreen extends StatelessWidget {
   final String? paramName;
   final String? paramLocation;
   final bool? paramStatus;
+  final DateTime? paramDateTime;
 
   const TodoInsertScreen({
     this.paramId,
     this.paramName,
     this.paramLocation,
     this.paramStatus,
+    this.paramDateTime,
     Key? key,
   }) : super(key: key);
 

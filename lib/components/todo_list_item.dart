@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_pos/screens/todo_insert_screen.dart';
 import 'package:flutter_todo_pos/services/todos_service.dart';
 import '../models/todo.dart';
+import 'package:intl/intl.dart';
 
 class TodoListItem extends StatelessWidget {
   const TodoListItem({
@@ -26,7 +27,15 @@ class TodoListItem extends StatelessWidget {
         },
       ),
       title: Text(todo.description),
-      subtitle: Text(todo.location),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Task starts at: ${DateFormat('HH:mm:ss dd/MM/yyyy').format(todo.dateTime)}',
+          ),
+          Text('Location: ${todo.location}'),
+        ],
+      ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -48,6 +57,7 @@ class TodoListItem extends StatelessWidget {
               paramName: todo.description,
               paramLocation: todo.location,
               paramStatus: todo.status,
+              paramDateTime: todo.dateTime,
             ),
           ),
         ),

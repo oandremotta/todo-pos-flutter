@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_pos/models/todo.dart';
 import 'package:flutter_todo_pos/screens/todo_list_screen.dart';
 import 'package:flutter_todo_pos/services/todos_service.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 
 class FormTodoItem extends StatefulWidget {
@@ -9,6 +10,7 @@ class FormTodoItem extends StatefulWidget {
   final String? paramName;
   final String? paramLocation;
   final bool? paramStatus;
+  final DateTime? paramDateTime;
 
   const FormTodoItem({
     Key? key,
@@ -16,6 +18,7 @@ class FormTodoItem extends StatefulWidget {
     this.paramName,
     this.paramLocation,
     this.paramStatus,
+    this.paramDateTime,
   }) : super(key: key);
 
   @override
@@ -29,6 +32,7 @@ class _FormTodoItemState extends State<FormTodoItem> {
   final TodosService _service = TodosService();
   late Future<String> _locationFuture;
   late String id = '';
+  late DateTime _dateTime; // New field for date and time
 
   @override
   void initState() {
@@ -37,9 +41,11 @@ class _FormTodoItemState extends State<FormTodoItem> {
     _description.text = widget.paramName ?? '';
     _location.text = widget.paramLocation ?? '';
     _statusNotifier.value = widget.paramStatus ?? false;
+    _dateTime = DateTime.now(); // Initialize with current date and time
     _locationFuture = widget.paramLocation != null
         ? Future.value(widget.paramLocation!)
         : getLocation();
+    _dateTime = widget.paramDateTime ?? DateTime.now();
   }
 
   Future<String> getLocation() async {
@@ -69,6 +75,7 @@ class _FormTodoItemState extends State<FormTodoItem> {
       _description.text,
       _statusNotifier.value,
       _location.text,
+      _dateTime, // Include the date and time field
     );
     if (id != '') {
       _service.update(id, todo);
@@ -103,7 +110,7 @@ class _FormTodoItemState extends State<FormTodoItem> {
     if (id != '') {
       return ElevatedButton(
         onPressed: onDelete,
-        child: Text("Deletar"),
+        child: Text("Delete"),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.red, // Muda a cor do botão para vermelho
         ),
@@ -149,6 +156,36 @@ class _FormTodoItemState extends State<FormTodoItem> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    final date = await showDatePicker(
+                      context: context,
+                      initialDate: _dateTime,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+                    if (date != null) {
+                      final time = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.fromDateTime(_dateTime),
+                      );
+
+                      if (time != null) {
+                        setState(() {
+                          _dateTime = DateTime(
+                            date.year,
+                            date.month,
+                            date.day,
+                            time.hour,
+                            time.minute,
+                          );
+                        });
+                      }
+                    }
+                  },
+                  child: const Text('Select Date and Time'),
+                ),
+                const SizedBox(width: 16.0),
                 const Text("Status"),
                 ValueListenableBuilder<bool>(
                   valueListenable: _statusNotifier,
@@ -169,12 +206,12 @@ class _FormTodoItemState extends State<FormTodoItem> {
               children: [
                 ElevatedButton(
                   onPressed: onSubmit,
-                  child: const Text("Salvar"),
+                  child: const Text("Save"),
                 ),
                 const SizedBox(width: 16.0),
                 buildButtonDelete(),
               ],
-            ),
+            )
           ],
         ),
       ),
