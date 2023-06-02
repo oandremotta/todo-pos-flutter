@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_pos/models/todo.dart';
+import 'package:flutter_todo_pos/providers/todo.provider.dart';
 import 'package:flutter_todo_pos/screens/todo_list_screen.dart';
 import 'package:flutter_todo_pos/services/todos_service.dart';
-import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 class FormTodoItem extends StatefulWidget {
   final String? paramId;
@@ -29,7 +30,6 @@ class _FormTodoItemState extends State<FormTodoItem> {
   final _description = TextEditingController();
   final _location = TextEditingController();
   final ValueNotifier<bool> _statusNotifier = ValueNotifier<bool>(false);
-  final TodosService _service = TodosService();
   late Future<String> _locationFuture;
   late String id = '';
   late DateTime _dateTime; // New field for date and time
@@ -71,17 +71,21 @@ class _FormTodoItemState extends State<FormTodoItem> {
   }
 
   void onSubmit() {
+    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+
     Todo todo = Todo(
       _description.text,
       _statusNotifier.value,
       _location.text,
       _dateTime, // Include the date and time field
     );
+
     if (id != '') {
-      _service.update(id, todo);
+      todoProvider.update(todo);
     } else {
-      _service.insert(todo);
+      todoProvider.insert(todo);
     }
+
     Navigator.pop(context); // Voltar à tela anterior
 
     Navigator.pushReplacement(
@@ -94,7 +98,9 @@ class _FormTodoItemState extends State<FormTodoItem> {
   }
 
   void onDelete() {
-    _service.delete(id);
+    final todosService = Provider.of<TodosService>(context, listen: false);
+    todosService.delete(id);
+
     Navigator.pop(context); // Voltar à tela anterior
 
     Navigator.pushReplacement(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_pos/screens/todo_insert_screen.dart';
-import 'package:flutter_todo_pos/services/todos_service.dart';
-import '../models/todo.dart';
+import 'package:flutter_todo_pos/models/todo.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../providers/todo.provider.dart';
+import '../screens/todo_insert_screen.dart';
 
 class TodoListItem extends StatelessWidget {
   const TodoListItem({
@@ -22,7 +23,8 @@ class TodoListItem extends StatelessWidget {
       leading: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () {
-          TodosService().delete(todo.id.toString());
+          Provider.of<TodoProvider>(context, listen: false)
+              .remove(todo); // Utilizando o TodoProvider para remover a tarefa
           onDelete(); // Chamando a função onDelete após a exclusão
         },
       ),
@@ -43,7 +45,8 @@ class TodoListItem extends StatelessWidget {
             value: todo.status,
             onChanged: (value) {
               onTodoStatusChanged(value ?? false);
-              TodosService().update(todo.id.toString(), todo);
+              Provider.of<TodoProvider>(context, listen: false).update(
+                  todo); // Utilizando o TodoProvider para atualizar a tarefa
             },
           ),
         ],
