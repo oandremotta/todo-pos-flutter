@@ -20,11 +20,6 @@ class TodoInsertScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text("Tarefa"),
-        ),
-      ),
       body: Column(
         children: [
           FormTodoItem(

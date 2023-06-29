@@ -10,9 +10,6 @@ class TodoShowScreen extends StatelessWidget {
     Todo todo = ModalRoute.of(context)?.settings.arguments as Todo;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(todo.description),
-      ),
       body: Column(
         children: [
           Text(

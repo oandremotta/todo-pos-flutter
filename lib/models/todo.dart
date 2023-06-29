@@ -3,11 +3,22 @@ class Todo {
   String description;
   bool status;
   String location;
-  DateTime dateTime; // New field for date and time
+  DateTime dateTime;
 
-  Todo(this.description, this.status, this.location, this.dateTime);
+  Todo(
+    this.description,
+    this.status,
+    this.location,
+    this.dateTime,
+  );
+
   Todo.withId(
-      this.id, this.description, this.status, this.location, this.dateTime);
+    this.id,
+    this.description,
+    this.status,
+    this.location,
+    this.dateTime,
+  );
 
   Todo.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -17,10 +28,11 @@ class Todo {
         dateTime = DateTime.parse(json['dateTime']);
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'description': description,
         'status': status,
         'location': location,
-        'dateTime': dateTime.toString(),
+        'dateTime': dateTime.toIso8601String(),
       };
 
   static List<Todo> listFromJson(Map<String, dynamic> json) {
