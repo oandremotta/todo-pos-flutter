@@ -3,6 +3,7 @@ import 'package:flutter_todo_pos/models/todo.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../providers/todo.provider.dart';
+import '../providers/todo_firestore_provider.dart';
 import '../screens/todo_insert_screen.dart';
 
 class TodoListItem extends StatelessWidget {
@@ -23,7 +24,7 @@ class TodoListItem extends StatelessWidget {
       leading: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () {
-          Provider.of<TodoProvider>(context, listen: false)
+          Provider.of<TodoFireStoreProvider>(context, listen: false)
               .remove(todo); // Utilizando o TodoProvider para remover a tarefa
           onDelete(); // Chamando a função onDelete após a exclusão
         },

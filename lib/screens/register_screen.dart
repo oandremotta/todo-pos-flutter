@@ -49,8 +49,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Text(
+                "Registrar",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
               Image.asset(
-                'assets/images/login_image.png',
+                'assets/images/todo-list.png',
                 width: 200,
                 height: 200,
               ),

@@ -1,8 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_pos/models/todo.dart';
-import 'package:flutter_todo_pos/providers/todo.provider.dart';
+import 'package:flutter_todo_pos/providers/todo_firestore_provider.dart';
 import 'package:flutter_todo_pos/screens/todo_list_screen.dart';
-import 'package:flutter_todo_pos/services/todos_service.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
@@ -70,20 +70,23 @@ class _FormTodoItemState extends State<FormTodoItem> {
     return "${locationData.latitude} : ${locationData.longitude}";
   }
 
-  void onSubmit() {
-    final todoProvider = Provider.of<TodoProvider>(context, listen: false);
+  void onSubmit() async {
+    final todoProvider =
+        Provider.of<TodoFireStoreProvider>(context, listen: false);
 
     Todo todo = Todo(
-      _description.text,
-      _statusNotifier.value,
-      _location.text,
-      _dateTime, // Include the date and time field
+      id: id,
+      description: _description.text,
+      status: _statusNotifier.value,
+      location: _location.text,
+      dateTime: _dateTime, // Include the date and time field
+      userId: FirebaseAuth.instance.currentUser?.uid ?? '',
     );
 
     if (id != '') {
-      todoProvider.update(todo);
+      await todoProvider.update(todo);
     } else {
-      todoProvider.insert(todo);
+      await todoProvider.insert(todo);
     }
 
     Navigator.pop(context); // Voltar à tela anterior
@@ -97,9 +100,18 @@ class _FormTodoItemState extends State<FormTodoItem> {
     );
   }
 
-  void onDelete() {
-    final todosService = Provider.of<TodosService>(context, listen: false);
-    todosService.delete(id);
+  void onDelete() async {
+    final todoProvider =
+        Provider.of<TodoFireStoreProvider>(context, listen: false);
+    Todo todo = Todo(
+      id: id,
+      description: _description.text,
+      status: _statusNotifier.value,
+      location: _location.text,
+      dateTime: _dateTime,
+      userId: FirebaseAuth.instance.currentUser?.uid ?? '',
+    );
+    await todoProvider.remove(todo);
 
     Navigator.pop(context); // Voltar à tela anterior
 
@@ -135,7 +147,7 @@ class _FormTodoItemState extends State<FormTodoItem> {
           children: [
             TextField(
               decoration: const InputDecoration(
-                labelText: "Descrição da tarefa",
+                labelText: "Task Description",
               ),
               controller: _description,
             ),
@@ -146,12 +158,12 @@ class _FormTodoItemState extends State<FormTodoItem> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
-                  return const Text('Erro ao obter localização');
+                  return const Text('Error fetching location');
                 } else {
                   _location.text = snapshot.data ?? '';
                   return TextField(
                     decoration: const InputDecoration(
-                      labelText: "Localização",
+                      labelText: "Location",
                     ),
                     controller: _location,
                   );

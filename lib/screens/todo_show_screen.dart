@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_pos/models/todo.dart';
 
+import '../components/menu_item.dart';
+
 class TodoShowScreen extends StatelessWidget {
   const TodoShowScreen({super.key});
 
@@ -10,6 +12,15 @@ class TodoShowScreen extends StatelessWidget {
     Todo todo = ModalRoute.of(context)?.settings.arguments as Todo;
 
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Center(
+          child: Text('Tarefas!'),
+        ),
+        actions: [
+          MenuWidget(),
+        ],
+      ),
       body: Column(
         children: [
           Text(

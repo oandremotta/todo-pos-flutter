@@ -4,17 +4,7 @@ import '../components/todo_list.dart';
 import '../routes/route_paths.dart';
 
 class TodoListScreen extends StatelessWidget {
-  const TodoListScreen({super.key});
-
-  void handleMenuItemSelected(String value) {
-    if (value == 'perfil') {
-      // Ação para o menu "Perfil"
-      // Implemente a lógica desejada
-    } else if (value == 'sair') {
-      // Ação para o menu "Sair"
-      // Implemente a lógica desejada
-    }
-  }
+  const TodoListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +15,14 @@ class TodoListScreen extends StatelessWidget {
           child: Text('Tarefas!'),
         ),
         actions: [
-          MenuWidget(onMenuItemSelected: handleMenuItemSelected),
+          MenuWidget(),
         ],
       ),
-      body: Column(children: [
-        TodoList(),
-      ]),
+      body: const Column(
+        children: [
+          TodoList(),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {

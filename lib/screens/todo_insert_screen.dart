@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/form_todo_item.dart';
+import '../components/menu_item.dart';
 
 class TodoInsertScreen extends StatelessWidget {
   final String? paramId;
@@ -20,6 +21,14 @@ class TodoInsertScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text('Tarefas!'),
+        ),
+        actions: [
+          MenuWidget(),
+        ],
+      ),
       body: Column(
         children: [
           FormTodoItem(

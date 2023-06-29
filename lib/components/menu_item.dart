@@ -3,13 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_todo_pos/routes/route_paths.dart';
 
 class MenuWidget extends StatelessWidget {
-  final void Function(String) onMenuItemSelected;
   final FirebaseAuth auth = FirebaseAuth.instance;
-
-  MenuWidget({
-    required this.onMenuItemSelected,
-    Key? key,
-  }) : super(key: key);
 
   void handleMenuItemSelected(BuildContext context, String value) {
     if (value == 'perfil') {
@@ -17,7 +11,7 @@ class MenuWidget extends StatelessWidget {
       Navigator.pushNamed(
         context,
         RoutePaths.PROFILE,
-      ); // Redirecionar para a tela de login
+      ); // Redirecionar para a tela de perfil
     } else if (value == 'sair') {
       auth.signOut(); // Fazer logout
       Navigator.pushNamedAndRemoveUntil(

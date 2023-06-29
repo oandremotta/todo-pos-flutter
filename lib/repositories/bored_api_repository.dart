@@ -12,7 +12,7 @@ class BoredApiRepository {
       final jsonBody = json.decode(response.body);
       return Bored.fromJson(jsonBody);
     } else {
-      throw Exception('Failed to fetch activity');
+      throw Exception('Failed to fetch bored api');
     }
   }
 }

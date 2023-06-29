@@ -106,6 +106,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                const Text(
+                  "Login",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
                 Image.asset(
                   'assets/images/todo-list.png',
                   width: 200,

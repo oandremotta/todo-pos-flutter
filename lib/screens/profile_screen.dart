@@ -40,45 +40,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         // Adicionando SingleChildScrollView
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 80,
-                backgroundImage:
-                    imageUrl != null ? NetworkImage(imageUrl!) : null,
-                child: imageUrl == null
-                    ? const Icon(
-                        Icons.person,
-                        size: 80,
-                      )
-                    : null,
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: const Text('Selecionar Imagem'),
-              ),
-              const SizedBox(height: 32),
-              Text('E-mail: $email'),
-              const SizedBox(height: 18),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 80,
+                  backgroundImage:
+                      imageUrl != null ? NetworkImage(imageUrl!) : null,
+                  child: imageUrl == null
+                      ? const Icon(
+                          Icons.person,
+                          size: 80,
+                        )
+                      : null,
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: _pickImage,
+                  child: const Text('Selecionar Imagem'),
+                ),
+                const SizedBox(height: 32),
+                Text('E-mail: $email'),
+                const SizedBox(height: 18),
+                TextFormField(
                   controller: _passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
                     labelText: 'Nova Senha',
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _changePassword,
-                child: const Text('Alterar Senha'),
-              ),
-            ],
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: _changePassword,
+                  child: const Text('Alterar Senha'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
