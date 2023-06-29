@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_pos/components/todo_list_item.dart';
 import 'package:flutter_todo_pos/services/todos_service.dart';
-import '../models/todo.dart';
+import 'package:todos_pk/todos_pk.dart';
 import '../providers/todo_firestore_provider.dart';
 
 class TodoList extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_pos/models/todo.dart';
 import 'package:flutter_todo_pos/services/todos_service.dart';
+import 'package:todos_pk/todos_pk.dart';
 
 class TodoProvider with ChangeNotifier {
   List<Todo> todos = [];

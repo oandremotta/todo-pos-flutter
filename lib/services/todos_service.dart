@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart';
-import '../models/todo.dart';
+import 'package:todos_pk/todos_pk.dart';
 import '../repositories/todos_repository.dart';
 
 class TodosService {

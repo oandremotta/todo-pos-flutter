@@ -1,5 +1,5 @@
-import '../models/todo.dart';
 import '../repositories/todo_firestore_repository.dart';
+import 'package:todos_pk/todos_pk.dart';
 
 class TodoFireStoreService {
   final TodoFirestoreRepository _repository = TodoFirestoreRepository();
