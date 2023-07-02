@@ -69,7 +69,7 @@ class DefaultFirebaseOptions {
     projectId: 'todo-flutter-448af',
     databaseURL: 'https://todo-flutter-448af-default-rtdb.firebaseio.com',
     storageBucket: 'todo-flutter-448af.appspot.com',
-    iosBundleId: 'com.example.flutterTodoPos',
+    iosBundleId: 'com.tech_attom.flutterTodoPos',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -79,6 +79,6 @@ class DefaultFirebaseOptions {
     projectId: 'todo-flutter-448af',
     databaseURL: 'https://todo-flutter-448af-default-rtdb.firebaseio.com',
     storageBucket: 'todo-flutter-448af.appspot.com',
-    iosBundleId: 'com.example.flutterTodoPos.RunnerTests',
+    iosBundleId: 'com.tech_attom.flutterTodoPos.RunnerTests',
   );
 }
